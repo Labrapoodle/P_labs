@@ -1,0 +1,433 @@
+ Percent |	Source code & Disassembly of dgemm for cache-misses (250741 samples, percent: local period)
+-----------------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    00000000000012f7 <dgemm_def>:
+         : 6    dgemm_def():
+         : 44   }
+         : 45   }
+         : 46   }
+         :
+         : 48   void dgemm_def(double a[N][N], double b[N][N], double c[N][N])
+         : 49   {
+    0.00 :   12f7:   push   %rbp
+    0.00 :   12f8:   mov    %rsp,%rbp
+    0.00 :   12fb:   mov    %rdi,-0x18(%rbp)
+    0.00 :   12ff:   mov    %rsi,-0x20(%rbp)
+    0.00 :   1303:   mov    %rdx,-0x28(%rbp)
+         : 45   for (int i = 0; i < N; i++) {
+    0.00 :   1307:   movl   $0x0,-0x4(%rbp)
+    0.00 :   130e:   jmp    13cd <dgemm_def+0xd6>
+         : 46   for (int j = 0; j < N; j++) {
+    0.00 :   1313:   movl   $0x0,-0x8(%rbp)
+    0.00 :   131a:   jmp    13bc <dgemm_def+0xc5>
+         : 47   for (int k = 0; k < N; k++) {
+    0.00 :   131f:   movl   $0x0,-0xc(%rbp)
+    0.00 :   1326:   jmp    13ab <dgemm_def+0xb4>
+         : 48   c[i][j] += a[i][k] * b[k][j];
+    2.00 :   132b:   mov    -0x4(%rbp),%eax
+    0.03 :   132e:   cltq
+    0.33 :   1330:   shl    $0xd,%rax
+    0.07 :   1334:   mov    %rax,%rdx
+    1.52 :   1337:   mov    -0x28(%rbp),%rax
+    0.02 :   133b:   add    %rax,%rdx
+    0.80 :   133e:   mov    -0x8(%rbp),%eax
+    0.11 :   1341:   cltq
+    0.93 :   1343:   movsd  (%rdx,%rax,8),%xmm1
+    0.98 :   1348:   mov    -0x4(%rbp),%eax
+    0.38 :   134b:   cltq
+    0.08 :   134d:   shl    $0xd,%rax
+    1.14 :   1351:   mov    %rax,%rdx
+    0.34 :   1354:   mov    -0x18(%rbp),%rax
+    1.86 :   1358:   add    %rax,%rdx
+    0.08 :   135b:   mov    -0xc(%rbp),%eax
+    1.78 :   135e:   cltq
+    0.71 :   1360:   movsd  (%rdx,%rax,8),%xmm2
+    0.40 :   1365:   mov    -0xc(%rbp),%eax
+    0.08 :   1368:   cltq
+    1.67 :   136a:   shl    $0xd,%rax
+    0.38 :   136e:   mov    %rax,%rdx
+    1.19 :   1371:   mov    -0x20(%rbp),%rax
+    0.09 :   1375:   add    %rax,%rdx
+   11.79 :   1378:   mov    -0x8(%rbp),%eax
+    0.22 :   137b:   cltq
+    0.42 :   137d:   movsd  (%rdx,%rax,8),%xmm0
+   48.39 :   1382:   mulsd  %xmm2,%xmm0
+    8.77 :   1386:   mov    -0x4(%rbp),%eax
+    0.11 :   1389:   cltq
+    0.50 :   138b:   shl    $0xd,%rax
+    0.02 :   138f:   mov    %rax,%rdx
+    1.69 :   1392:   mov    -0x28(%rbp),%rax
+    0.18 :   1396:   add    %rax,%rdx
+    0.11 :   1399:   addsd  %xmm1,%xmm0
+    5.84 :   139d:   mov    -0x8(%rbp),%eax
+    0.47 :   13a0:   cltq
+    0.11 :   13a2:   movsd  %xmm0,(%rdx,%rax,8)
+         : 47   for (int k = 0; k < N; k++) {
+    1.35 :   13a7:   addl   $0x1,-0xc(%rbp)
+    2.77 :   13ab:   cmpl   $0x3ff,-0xc(%rbp)
+    0.30 :   13b2:   jle    132b <dgemm_def+0x34>
+         : 46   for (int j = 0; j < N; j++) {
+    0.00 :   13b8:   addl   $0x1,-0x8(%rbp)
+    0.00 :   13bc:   cmpl   $0x3ff,-0x8(%rbp)
+    0.00 :   13c3:   jle    131f <dgemm_def+0x28>
+         : 45   for (int i = 0; i < N; i++) {
+    0.00 :   13c9:   addl   $0x1,-0x4(%rbp)
+    0.00 :   13cd:   cmpl   $0x3ff,-0x4(%rbp)
+    0.00 :   13d4:   jle    1313 <dgemm_def+0x1c>
+         : 52   } /* b[][] stride-N read */
+         : 53   }
+         : 54   }
+         : 55   }
+    0.00 :   13da:   nop
+    0.00 :   13db:   nop
+    0.00 :   13dc:   pop    %rbp
+    0.00 :   13dd:   ret
+ Percent |	Source code & Disassembly of dgemm for cache-misses (54199 samples, percent: local period)
+----------------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    0000000000001553 <dgemm_interchange>:
+         : 6    dgemm_interchange():
+         : 75   free(tmp);
+         : 76   }
+         :
+         : 78   // ijk to ikj
+         : 79   void dgemm_interchange(double a[N][N], double b[N][N], double c[N][N])
+         : 80   {
+    0.00 :   1553:   push   %rbp
+    0.00 :   1554:   mov    %rsp,%rbp
+    0.00 :   1557:   mov    %rdi,-0x18(%rbp)
+    0.00 :   155b:   mov    %rsi,-0x20(%rbp)
+    0.00 :   155f:   mov    %rdx,-0x28(%rbp)
+         : 76   for (int i = 0; i < N; i++) {
+    0.00 :   1563:   movl   $0x0,-0x4(%rbp)
+    0.00 :   156a:   jmp    1629 <dgemm_interchange+0xd6>
+         : 77   for (int k = 0; k < N; k++) {
+    0.00 :   156f:   movl   $0x0,-0x8(%rbp)
+    0.00 :   1576:   jmp    1618 <dgemm_interchange+0xc5>
+         : 78   for (int j = 0; j < N; j++) {
+    0.01 :   157b:   movl   $0x0,-0xc(%rbp)
+    0.00 :   1582:   jmp    1607 <dgemm_interchange+0xb4>
+         : 79   c[i][j] += a[i][k] * b[k][j];
+    4.76 :   1587:   mov    -0x4(%rbp),%eax
+    0.16 :   158a:   cltq
+    3.96 :   158c:   shl    $0xd,%rax
+    0.15 :   1590:   mov    %rax,%rdx
+    4.46 :   1593:   mov    -0x28(%rbp),%rax
+    0.18 :   1597:   add    %rax,%rdx
+    3.77 :   159a:   mov    -0xc(%rbp),%eax
+    0.14 :   159d:   cltq
+    4.15 :   159f:   movsd  (%rdx,%rax,8),%xmm1
+    0.79 :   15a4:   mov    -0x4(%rbp),%eax
+    3.50 :   15a7:   cltq
+    0.13 :   15a9:   shl    $0xd,%rax
+    3.76 :   15ad:   mov    %rax,%rdx
+    0.30 :   15b0:   mov    -0x18(%rbp),%rax
+    3.82 :   15b4:   add    %rax,%rdx
+    0.11 :   15b7:   mov    -0x8(%rbp),%eax
+    3.65 :   15ba:   cltq
+    0.36 :   15bc:   movsd  (%rdx,%rax,8),%xmm2
+    4.46 :   15c1:   mov    -0x8(%rbp),%eax
+    0.14 :   15c4:   cltq
+    3.95 :   15c6:   shl    $0xd,%rax
+    0.28 :   15ca:   mov    %rax,%rdx
+    4.55 :   15cd:   mov    -0x20(%rbp),%rax
+    0.13 :   15d1:   add    %rax,%rdx
+    4.34 :   15d4:   mov    -0xc(%rbp),%eax
+    0.35 :   15d7:   cltq
+    5.22 :   15d9:   movsd  (%rdx,%rax,8),%xmm0
+    0.72 :   15de:   mulsd  %xmm2,%xmm0
+    5.55 :   15e2:   mov    -0x4(%rbp),%eax
+    0.27 :   15e5:   cltq
+    5.41 :   15e7:   shl    $0xd,%rax
+    0.11 :   15eb:   mov    %rax,%rdx
+    4.63 :   15ee:   mov    -0x28(%rbp),%rax
+    0.25 :   15f2:   add    %rax,%rdx
+    5.18 :   15f5:   addsd  %xmm1,%xmm0
+    1.82 :   15f9:   mov    -0xc(%rbp),%eax
+    4.22 :   15fc:   cltq
+    0.19 :   15fe:   movsd  %xmm0,(%rdx,%rax,8)
+         : 78   for (int j = 0; j < N; j++) {
+    5.32 :   1603:   addl   $0x1,-0xc(%rbp)
+    4.25 :   1607:   cmpl   $0x3ff,-0xc(%rbp)
+    0.42 :   160e:   jle    1587 <dgemm_interchange+0x34>
+         : 77   for (int k = 0; k < N; k++) {
+    0.01 :   1614:   addl   $0x1,-0x8(%rbp)
+    0.03 :   1618:   cmpl   $0x3ff,-0x8(%rbp)
+    0.03 :   161f:   jle    157b <dgemm_interchange+0x28>
+         : 76   for (int i = 0; i < N; i++) {
+    0.00 :   1625:   addl   $0x1,-0x4(%rbp)
+    0.00 :   1629:   cmpl   $0x3ff,-0x4(%rbp)
+    0.00 :   1630:   jle    156f <dgemm_interchange+0x1c>
+         : 83   } /* b[][] 1-stride read */
+         : 84   }
+         : 85   }
+         : 86   }
+    0.00 :   1636:   nop
+    0.00 :   1637:   nop
+    0.00 :   1638:   pop    %rbp
+    0.00 :   1639:   ret
+ Percent |	Source code & Disassembly of dgemm for cache-misses (20569 samples, percent: local period)
+----------------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    000000000000163a <dgemm_block>:
+         : 6    dgemm_block():
+         : 86   }
+         : 87   }
+         : 88   }
+         :
+         : 90   void dgemm_block(double a[N][N], double b[N][N], double c[N][N])
+         : 91   {
+    0.00 :   163a:   push   %rbp
+    0.00 :   163b:   mov    %rsp,%rbp
+    0.00 :   163e:   mov    %rdi,-0x28(%rbp)
+    0.00 :   1642:   mov    %rsi,-0x30(%rbp)
+    0.00 :   1646:   mov    %rdx,-0x38(%rbp)
+         : 87   const int bs = 32;
+    0.00 :   164a:   movl   $0x20,-0x1c(%rbp)
+         :
+         : 90   for (int i = 0; i< N; i += bs)
+    0.00 :   1651:   movl   $0x0,-0x4(%rbp)
+    0.00 :   1658:   jmp    179b <dgemm_block+0x161>
+         : 91   {
+         : 92   for (int k = 0; k < N; k+= bs)
+    0.00 :   165d:   movl   $0x0,-0x8(%rbp)
+    0.00 :   1664:   jmp    1788 <dgemm_block+0x14e>
+         : 93   {
+         : 94   for (int j = 0; j < N; j+= bs)
+    0.00 :   1669:   movl   $0x0,-0xc(%rbp)
+    0.00 :   1670:   jmp    1775 <dgemm_block+0x13b>
+         : 95   {
+         : 96   for (int ii = i; ii < IMIN(N, i+ bs) ; ii++)
+    0.01 :   1675:   mov    -0x4(%rbp),%eax
+    0.00 :   1678:   mov    %eax,-0x10(%rbp)
+    0.00 :   167b:   jmp    1754 <dgemm_block+0x11a>
+         : 97   {
+         : 98   for (int kk = k; kk < IMIN(N, k + bs) ; kk++)
+    0.03 :   1680:   mov    -0x8(%rbp),%eax
+    0.00 :   1683:   mov    %eax,-0x14(%rbp)
+    0.00 :   1686:   jmp    1735 <dgemm_block+0xfb>
+         : 99   {
+         : 100  for (int jj = j; jj < IMIN(N, j + bs) ; jj++)
+    0.07 :   168b:   mov    -0xc(%rbp),%eax
+    0.03 :   168e:   mov    %eax,-0x18(%rbp)
+    0.02 :   1691:   jmp    1716 <dgemm_block+0xdc>
+         : 101  {
+         : 102  c[ii][jj] += a[ii][kk] * b[kk][jj];
+    1.58 :   1696:   mov    -0x10(%rbp),%eax
+    2.65 :   1699:   cltq
+    1.40 :   169b:   shl    $0xd,%rax
+    2.35 :   169f:   mov    %rax,%rdx
+    1.84 :   16a2:   mov    -0x38(%rbp),%rax
+    2.69 :   16a6:   add    %rax,%rdx
+    1.68 :   16a9:   mov    -0x18(%rbp),%eax
+    2.32 :   16ac:   cltq
+    1.61 :   16ae:   movsd  (%rdx,%rax,8),%xmm1
+    4.37 :   16b3:   mov    -0x10(%rbp),%eax
+    1.64 :   16b6:   cltq
+    2.15 :   16b8:   shl    $0xd,%rax
+    1.73 :   16bc:   mov    %rax,%rdx
+    2.91 :   16bf:   mov    -0x28(%rbp),%rax
+    1.44 :   16c3:   add    %rax,%rdx
+    2.15 :   16c6:   mov    -0x14(%rbp),%eax
+    1.56 :   16c9:   cltq
+    2.80 :   16cb:   movsd  (%rdx,%rax,8),%xmm2
+    2.62 :   16d0:   mov    -0x14(%rbp),%eax
+    2.10 :   16d3:   cltq
+    1.70 :   16d5:   shl    $0xd,%rax
+    2.68 :   16d9:   mov    %rax,%rdx
+    1.61 :   16dc:   mov    -0x30(%rbp),%rax
+    2.03 :   16e0:   add    %rax,%rdx
+    1.63 :   16e3:   mov    -0x18(%rbp),%eax
+    2.19 :   16e6:   cltq
+    1.91 :   16e8:   movsd  (%rdx,%rax,8),%xmm0
+    3.83 :   16ed:   mulsd  %xmm2,%xmm0
+    4.35 :   16f1:   mov    -0x10(%rbp),%eax
+    1.94 :   16f4:   cltq
+    1.73 :   16f6:   shl    $0xd,%rax
+    1.98 :   16fa:   mov    %rax,%rdx
+    2.19 :   16fd:   mov    -0x38(%rbp),%rax
+    1.41 :   1701:   add    %rax,%rdx
+    1.36 :   1704:   addsd  %xmm1,%xmm0
+    3.44 :   1708:   mov    -0x18(%rbp),%eax
+    1.63 :   170b:   cltq
+    1.17 :   170d:   movsd  %xmm0,(%rdx,%rax,8)
+         : 99   for (int jj = j; jj < IMIN(N, j + bs) ; jj++)
+    2.24 :   1712:   addl   $0x1,-0x18(%rbp)
+    3.13 :   1716:   mov    -0xc(%rbp),%edx
+    1.24 :   1719:   mov    -0x1c(%rbp),%eax
+    2.68 :   171c:   add    %edx,%eax
+    1.51 :   171e:   mov    $0x400,%edx
+    2.51 :   1723:   cmp    %edx,%eax
+    1.39 :   1725:   cmovg  %edx,%eax
+    2.33 :   1728:   cmp    %eax,-0x18(%rbp)
+    0.01 :   172b:   jl     1696 <dgemm_block+0x5c>
+         : 97   for (int kk = k; kk < IMIN(N, k + bs) ; kk++)
+    0.04 :   1731:   addl   $0x1,-0x14(%rbp)
+    0.18 :   1735:   mov    -0x8(%rbp),%edx
+    0.02 :   1738:   mov    -0x1c(%rbp),%eax
+    0.02 :   173b:   add    %edx,%eax
+    0.06 :   173d:   mov    $0x400,%edx
+    0.04 :   1742:   cmp    %edx,%eax
+    0.02 :   1744:   cmovg  %edx,%eax
+    0.01 :   1747:   cmp    %eax,-0x14(%rbp)
+    0.00 :   174a:   jl     168b <dgemm_block+0x51>
+         : 95   for (int ii = i; ii < IMIN(N, i+ bs) ; ii++)
+    0.00 :   1750:   addl   $0x1,-0x10(%rbp)
+    0.02 :   1754:   mov    -0x4(%rbp),%edx
+    0.00 :   1757:   mov    -0x1c(%rbp),%eax
+    0.00 :   175a:   add    %edx,%eax
+    0.00 :   175c:   mov    $0x400,%edx
+    0.00 :   1761:   cmp    %edx,%eax
+    0.00 :   1763:   cmovg  %edx,%eax
+    0.00 :   1766:   cmp    %eax,-0x10(%rbp)
+    0.00 :   1769:   jl     1680 <dgemm_block+0x46>
+         : 93   for (int j = 0; j < N; j+= bs)
+    0.00 :   176f:   mov    -0x1c(%rbp),%eax
+    0.00 :   1772:   add    %eax,-0xc(%rbp)
+    0.00 :   1775:   cmpl   $0x3ff,-0xc(%rbp)
+    0.00 :   177c:   jle    1675 <dgemm_block+0x3b>
+         : 91   for (int k = 0; k < N; k+= bs)
+    0.00 :   1782:   mov    -0x1c(%rbp),%eax
+    0.00 :   1785:   add    %eax,-0x8(%rbp)
+    0.00 :   1788:   cmpl   $0x3ff,-0x8(%rbp)
+    0.00 :   178f:   jle    1669 <dgemm_block+0x2f>
+         : 89   for (int i = 0; i< N; i += bs)
+    0.00 :   1795:   mov    -0x1c(%rbp),%eax
+    0.00 :   1798:   add    %eax,-0x4(%rbp)
+    0.00 :   179b:   cmpl   $0x3ff,-0x4(%rbp)
+    0.00 :   17a2:   jle    165d <dgemm_block+0x23>
+         : 109  }
+         : 110  }
+         : 111  }
+         : 112  }
+         : 113  }
+         : 114  }
+    0.00 :   17a8:   nop
+    0.00 :   17a9:   nop
+    0.00 :   17aa:   pop    %rbp
+    0.00 :   17ab:   ret
+ Percent |	Source code & Disassembly of dgemm for cache-misses (56 samples, percent: local period)
+-------------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    00000000000011e8 <matrix_init>:
+         : 6    matrix_init():
+         : 32   clock_gettime(CLOCK_MONOTONIC, &ts);
+         : 33   return ts.tv_sec + ts.tv_nsec * 1E-9;
+         : 34   }
+         :
+         : 36   void matrix_init(double a[N][N], double b[N][N], double c[N][N])
+         : 37   {
+    0.00 :   11e8:   push   %rbp
+    0.00 :   11e9:   mov    %rsp,%rbp
+    0.00 :   11ec:   sub    $0x30,%rsp
+    0.00 :   11f0:   mov    %rdi,-0x18(%rbp)
+    0.00 :   11f4:   mov    %rsi,-0x20(%rbp)
+    0.00 :   11f8:   mov    %rdx,-0x28(%rbp)
+         : 33   srand(0);
+    0.00 :   11fc:   mov    $0x0,%edi
+    0.00 :   1201:   call   1060 <srand@plt>
+         : 34   for (int i = 0; i < N; i++) {
+    0.00 :   1206:   movl   $0x0,-0x4(%rbp)
+    0.00 :   120d:   jmp    12e6 <matrix_init+0xfe>
+         : 35   for (int j = 0; j < N; j++) {
+    0.00 :   1212:   movl   $0x0,-0x8(%rbp)
+    0.00 :   1219:   jmp    12d5 <matrix_init+0xed>
+         : 36   a[i][j] = rand() % 100;
+    9.64 :   121e:   call   1090 <rand@plt>
+    3.17 :   1223:   movslq %eax,%rdx
+    0.00 :   1226:   imul   $0x51eb851f,%rdx,%rdx
+    0.00 :   122d:   shr    $0x20,%rdx
+    0.00 :   1231:   sar    $0x5,%edx
+    5.80 :   1234:   mov    %eax,%ecx
+    0.00 :   1236:   sar    $0x1f,%ecx
+    0.00 :   1239:   sub    %ecx,%edx
+    0.00 :   123b:   imul   $0x64,%edx,%ecx
+    4.43 :   123e:   sub    %ecx,%eax
+    0.00 :   1240:   mov    %eax,%edx
+    0.00 :   1242:   mov    -0x4(%rbp),%eax
+    0.00 :   1245:   cltq
+   12.62 :   1247:   shl    $0xd,%rax
+    0.00 :   124b:   mov    %rax,%rcx
+    0.00 :   124e:   mov    -0x18(%rbp),%rax
+    0.00 :   1252:   add    %rax,%rcx
+    5.14 :   1255:   pxor   %xmm0,%xmm0
+    0.00 :   1259:   cvtsi2sd %edx,%xmm0
+    0.00 :   125d:   mov    -0x8(%rbp),%eax
+    6.07 :   1260:   cltq
+    0.00 :   1262:   movsd  %xmm0,(%rcx,%rax,8)
+         : 37   b[i][j] = rand() % 100;
+    0.00 :   1267:   call   1090 <rand@plt>
+    5.54 :   126c:   movslq %eax,%rdx
+    0.00 :   126f:   imul   $0x51eb851f,%rdx,%rdx
+    0.00 :   1276:   shr    $0x20,%rdx
+    0.00 :   127a:   sar    $0x5,%edx
+    1.15 :   127d:   mov    %eax,%ecx
+    0.00 :   127f:   sar    $0x1f,%ecx
+    0.00 :   1282:   sub    %ecx,%edx
+    0.00 :   1284:   imul   $0x64,%edx,%ecx
+    1.12 :   1287:   sub    %ecx,%eax
+    0.00 :   1289:   mov    %eax,%edx
+    0.00 :   128b:   mov    -0x4(%rbp),%eax
+    0.00 :   128e:   cltq
+    8.28 :   1290:   shl    $0xd,%rax
+    0.00 :   1294:   mov    %rax,%rcx
+    0.00 :   1297:   mov    -0x20(%rbp),%rax
+    0.00 :   129b:   add    %rax,%rcx
+    1.18 :   129e:   pxor   %xmm0,%xmm0
+    0.00 :   12a2:   cvtsi2sd %edx,%xmm0
+    2.37 :   12a6:   mov    -0x8(%rbp),%eax
+    1.55 :   12a9:   cltq
+    0.00 :   12ab:   movsd  %xmm0,(%rcx,%rax,8)
+         : 38   c[i][j] = 0;
+    1.04 :   12b0:   mov    -0x4(%rbp),%eax
+    0.00 :   12b3:   cltq
+    4.54 :   12b5:   shl    $0xd,%rax
+    0.00 :   12b9:   mov    %rax,%rdx
+    0.00 :   12bc:   mov    -0x28(%rbp),%rax
+    0.00 :   12c0:   add    %rax,%rdx
+    2.38 :   12c3:   mov    -0x8(%rbp),%eax
+    0.00 :   12c6:   cltq
+    0.00 :   12c8:   pxor   %xmm0,%xmm0
+    0.00 :   12cc:   movsd  %xmm0,(%rdx,%rax,8)
+         : 35   for (int j = 0; j < N; j++) {
+   23.98 :   12d1:   addl   $0x1,-0x8(%rbp)
+    0.00 :   12d5:   cmpl   $0x3ff,-0x8(%rbp)
+    0.00 :   12dc:   jle    121e <matrix_init+0x36>
+         : 34   for (int i = 0; i < N; i++) {
+    0.00 :   12e2:   addl   $0x1,-0x4(%rbp)
+    0.00 :   12e6:   cmpl   $0x3ff,-0x4(%rbp)
+    0.00 :   12ed:   jle    1212 <matrix_init+0x2a>
+         : 41   }
+         : 42   }
+         : 43   }
+    0.00 :   12f3:   nop
+    0.00 :   12f4:   nop
+    0.00 :   12f5:   leave
+    0.00 :   12f6:   ret
+ Percent |	Source code & Disassembly of dgemm for cache-misses (12 samples, percent: local period)
+-------------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .plt:
+         :
+         : 5    0000000000001090 <rand@plt>:
+  100.00 :   1090:   jmp    *0x2f9a(%rip)        # 4030 <rand@GLIBC_2.2.5>
+    0.00 :   1096:   push   $0x6
+    0.00 :   109b:   jmp    1020 <_init+0x20>

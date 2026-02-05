@@ -1,0 +1,39 @@
+# DGEMM def: N=1024, elapsed time (sec) 19.329406
+# DGEMM interchange: N=1024, elapsed time (sec) 4.224390
+# DGEMM bloc: N=1024, BS=2, elapsed time (sec) 6.280353
+
+# DGEMM def: N=1024, elapsed time (sec) 19.390784
+# DGEMM interchange: N=1024, elapsed time (sec) 4.233906
+# DGEMM bloc: N=1024, BS=4, elapsed time (sec) 5.223021
+
+# DGEMM def: N=1024, elapsed time (sec) 19.374919
+# DGEMM interchange: N=1024, elapsed time (sec) 4.223312
+# DGEMM bloc: N=1024, BS=8, elapsed time (sec) 4.901834
+
+# DGEMM def: N=1024, elapsed time (sec) 19.348524
+# DGEMM interchange: N=1024, elapsed time (sec) 4.223997
+# DGEMM bloc: N=1024, BS=16, elapsed time (sec) 4.778936
+
+# DGEMM def: N=1024, elapsed time (sec) 19.333567
+# DGEMM interchange: N=1024, elapsed time (sec) 4.225273
+# DGEMM bloc: N=1024, BS=32, elapsed time (sec) 4.697363
+
+# DGEMM def: N=1024, elapsed time (sec) 19.362098
+# DGEMM interchange: N=1024, elapsed time (sec) 4.221902
+# DGEMM bloc: N=1024, BS=64, elapsed time (sec) 4.749286
+
+# DGEMM def: N=1024, elapsed time (sec) 19.364292
+# DGEMM interchange: N=1024, elapsed time (sec) 4.224909
+# DGEMM bloc: N=1024, BS=128, elapsed time (sec) 4.758053
+
+# DGEMM def: N=1024, elapsed time (sec) 19.349207
+# DGEMM interchange: N=1024, elapsed time (sec) 4.222013
+# DGEMM bloc: N=1024, BS=256, elapsed time (sec) 4.705785
+
+# DGEMM def: N=1024, elapsed time (sec) 19.338469
+# DGEMM interchange: N=1024, elapsed time (sec) 4.228147
+# DGEMM bloc: N=1024, BS=512, elapsed time (sec) 4.805962
+
+# DGEMM def: N=1024, elapsed time (sec) 19.336273
+# DGEMM interchange: N=1024, elapsed time (sec) 4.228274
+# DGEMM bloc: N=1024, BS=1024, elapsed time (sec) 4.692756

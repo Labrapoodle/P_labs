@@ -1,0 +1,313 @@
+ Percent |	Source code & Disassembly of prog for branches (1962 samples, percent: local period)
+----------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    000000000000133e <main>:
+         : 6    main():
+         : 47   return count < width * height / 2;
+         :
+         : 49   }
+         :
+         : 51   int main()
+         : 52   {
+    0.00 :   133e:   push   %rbp
+    0.00 :   133f:   mov    %rsp,%rbp
+    0.00 :   1342:   sub    $0x20,%rsp
+         : 48   uint8_t *image = malloc(sizeof(*image) * W * H);
+    0.00 :   1346:   mov    $0x7e90000,%edi
+    0.00 :   134b:   call   1070 <malloc@plt>
+    0.00 :   1350:   mov    %rax,-0x10(%rbp)
+         : 49   srand(0);
+    0.00 :   1354:   mov    $0x0,%edi
+    0.00 :   1359:   call   1060 <srand@plt>
+         : 50   for (int i = 0; i < H; i++) {
+    0.00 :   135e:   movl   $0x0,-0x4(%rbp)
+    0.00 :   1365:   jmp    13b5 <main+0x77>
+         : 51   for (int j = 0; j < W; j++) {
+    0.00 :   1367:   movl   $0x0,-0x8(%rbp)
+    0.00 :   136e:   jmp    13a8 <main+0x6a>
+         : 52   image[i * W + j] = rand() % 256;
+    0.05 :   1370:   call   1080 <rand@plt>
+   34.80 :   1375:   mov    %eax,%edx
+    0.05 :   1377:   mov    %edx,%eax
+    0.00 :   1379:   sar    $0x1f,%eax
+    0.00 :   137c:   shr    $0x18,%eax
+   33.56 :   137f:   add    %eax,%edx
+    0.05 :   1381:   movzbl %dl,%edx
+    0.00 :   1384:   sub    %eax,%edx
+    0.00 :   1386:   mov    %edx,%ecx
+   30.61 :   1388:   mov    -0x4(%rbp),%eax
+    0.00 :   138b:   imul   $0x3c00,%eax,%edx
+    0.05 :   1391:   mov    -0x8(%rbp),%eax
+    0.00 :   1394:   add    %edx,%eax
+    0.00 :   1396:   movslq %eax,%rdx
+    0.00 :   1399:   mov    -0x10(%rbp),%rax
+    0.00 :   139d:   add    %rdx,%rax
+    0.00 :   13a0:   mov    %ecx,%edx
+    0.00 :   13a2:   mov    %dl,(%rax)
+         : 51   for (int j = 0; j < W; j++) {
+    0.23 :   13a4:   addl   $0x1,-0x8(%rbp)
+    0.00 :   13a8:   cmpl   $0x3bff,-0x8(%rbp)
+    0.60 :   13af:   jle    1370 <main+0x32>
+         : 50   for (int i = 0; i < H; i++) {
+    0.00 :   13b1:   addl   $0x1,-0x4(%rbp)
+    0.00 :   13b5:   cmpl   $0x21bf,-0x4(%rbp)
+    0.00 :   13bc:   jle    1367 <main+0x29>
+         : 56   }
+         : 57   }
+         :
+         : 59   double t = wtime();
+    0.00 :   13be:   mov    $0x0,%eax
+    0.00 :   13c3:   call   1189 <wtime>
+    0.00 :   13c8:   movq   %xmm0,%rax
+    0.00 :   13cd:   mov    %rax,-0x18(%rbp)
+         : 57   int dark = image_is_dark(image, W, H);
+    0.00 :   13d1:   mov    -0x10(%rbp),%rax
+    0.00 :   13d5:   mov    $0x21c0,%edx
+    0.00 :   13da:   mov    $0x3c00,%esi
+    0.00 :   13df:   mov    %rax,%rdi
+    0.00 :   13e2:   call   11d8 <image_is_dark>
+    0.00 :   13e7:   mov    %eax,-0x1c(%rbp)
+         :
+         : 60   t = wtime() - t;
+    0.00 :   13ea:   mov    $0x0,%eax
+    0.00 :   13ef:   call   1189 <wtime>
+    0.00 :   13f4:   movq   %xmm0,%rax
+    0.00 :   13f9:   movq   %rax,%xmm0
+    0.00 :   13fe:   subsd  -0x18(%rbp),%xmm0
+    0.00 :   1403:   movsd  %xmm0,-0x18(%rbp)
+         :
+         : 62   printf("Time %.6f, dark %d\n", t, dark);
+    0.00 :   1408:   mov    -0x1c(%rbp),%edx
+    0.00 :   140b:   mov    -0x18(%rbp),%rax
+    0.00 :   140f:   mov    %edx,%esi
+    0.00 :   1411:   movq   %rax,%xmm0
+    0.00 :   1416:   lea    0xbeb(%rip),%rax        # 2008 <_IO_stdin_used+0x8>
+    0.00 :   141d:   mov    %rax,%rdi
+    0.00 :   1420:   mov    $0x1,%eax
+    0.00 :   1425:   call   1050 <printf@plt>
+         :
+         : 64   t = wtime();
+    0.00 :   142a:   mov    $0x0,%eax
+    0.00 :   142f:   call   1189 <wtime>
+    0.00 :   1434:   movq   %xmm0,%rax
+    0.00 :   1439:   mov    %rax,-0x18(%rbp)
+         : 64   dark = image_is_dark_opt(image, W, H);
+    0.00 :   143d:   mov    -0x10(%rbp),%rax
+    0.00 :   1441:   mov    $0x21c0,%edx
+    0.00 :   1446:   mov    $0x3c00,%esi
+    0.00 :   144b:   mov    %rax,%rdi
+    0.00 :   144e:   call   1255 <image_is_dark_opt>
+    0.00 :   1453:   mov    %eax,-0x1c(%rbp)
+         : 65   t = wtime()-t;
+    0.00 :   1456:   mov    $0x0,%eax
+    0.00 :   145b:   call   1189 <wtime>
+    0.00 :   1460:   movq   %xmm0,%rax
+    0.00 :   1465:   movq   %rax,%xmm0
+    0.00 :   146a:   subsd  -0x18(%rbp),%xmm0
+    0.00 :   146f:   movsd  %xmm0,-0x18(%rbp)
+         : 66   printf("Time %.6f, dark-opt %d\n", t, dark);
+    0.00 :   1474:   mov    -0x1c(%rbp),%edx
+    0.00 :   1477:   mov    -0x18(%rbp),%rax
+    0.00 :   147b:   mov    %edx,%esi
+    0.00 :   147d:   movq   %rax,%xmm0
+    0.00 :   1482:   lea    0xb93(%rip),%rax        # 201c <_IO_stdin_used+0x1c>
+    0.00 :   1489:   mov    %rax,%rdi
+    0.00 :   148c:   mov    $0x1,%eax
+    0.00 :   1491:   call   1050 <printf@plt>
+         :
+         : 69   free(image);
+    0.00 :   1496:   mov    -0x10(%rbp),%rax
+    0.00 :   149a:   mov    %rax,%rdi
+    0.00 :   149d:   call   1030 <free@plt>
+         : 69   return 0;
+    0.00 :   14a2:   mov    $0x0,%eax
+         : 70   }
+    0.00 :   14a7:   leave
+    0.00 :   14a8:   ret
+ Percent |	Source code & Disassembly of prog for branches (4785 samples, percent: local period)
+----------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    00000000000011d8 <image_is_dark>:
+         : 6    image_is_dark():
+         : 16   clock_gettime(CLOCK_MONOTONIC, &ts);
+         : 17   return ts.tv_sec + ts.tv_nsec * 1E-9;
+         : 18   }
+         :
+         : 20   int image_is_dark(uint8_t *img, int width, int height)
+         : 21   {
+    0.00 :   11d8:   push   %rbp
+    0.00 :   11d9:   mov    %rsp,%rbp
+    0.00 :   11dc:   mov    %rdi,-0x18(%rbp)
+    0.00 :   11e0:   mov    %esi,-0x1c(%rbp)
+    0.00 :   11e3:   mov    %edx,-0x20(%rbp)
+         : 17   int count = 0;
+    0.00 :   11e6:   movl   $0x0,-0x4(%rbp)
+         : 18   for (int i = 0; i < height; i++) {
+    0.00 :   11ed:   movl   $0x0,-0x8(%rbp)
+    0.00 :   11f4:   jmp    1232 <image_is_dark+0x5a>
+         : 19   for (int j = 0; j < width; j++) {
+    0.00 :   11f6:   movl   $0x0,-0xc(%rbp)
+    0.00 :   11fd:   jmp    1226 <image_is_dark+0x4e>
+         : 20   if (img[i * width + j] >= 128) {
+    1.12 :   11ff:   mov    -0x8(%rbp),%eax
+    0.00 :   1202:   imul   -0x1c(%rbp),%eax
+    0.74 :   1206:   mov    %eax,%edx
+    0.00 :   1208:   mov    -0xc(%rbp),%eax
+    0.94 :   120b:   add    %edx,%eax
+    0.02 :   120d:   movslq %eax,%rdx
+    0.60 :   1210:   mov    -0x18(%rbp),%rax
+    0.02 :   1214:   add    %rdx,%rax
+    1.03 :   1217:   movzbl (%rax),%eax
+    7.17 :   121a:   test   %al,%al
+    0.00 :   121c:   jns    1222 <image_is_dark+0x4a>
+         : 21   count++;
+   16.81 :   121e:   addl   $0x1,-0x4(%rbp)
+         : 19   for (int j = 0; j < width; j++) {
+   42.30 :   1222:   addl   $0x1,-0xc(%rbp)
+   28.14 :   1226:   mov    -0xc(%rbp),%eax
+    1.09 :   1229:   cmp    -0x1c(%rbp),%eax
+    0.00 :   122c:   jl     11ff <image_is_dark+0x27>
+         : 18   for (int i = 0; i < height; i++) {
+    0.00 :   122e:   addl   $0x1,-0x8(%rbp)
+    0.02 :   1232:   mov    -0x8(%rbp),%eax
+    0.00 :   1235:   cmp    -0x20(%rbp),%eax
+    0.00 :   1238:   jl     11f6 <image_is_dark+0x1e>
+         : 25   }
+         : 26   }
+         : 27   }
+         : 28   return count < width * height / 2;
+    0.00 :   123a:   mov    -0x1c(%rbp),%eax
+    0.00 :   123d:   imul   -0x20(%rbp),%eax
+    0.00 :   1241:   mov    %eax,%edx
+    0.00 :   1243:   shr    $0x1f,%edx
+    0.00 :   1246:   add    %edx,%eax
+    0.00 :   1248:   sar    %eax
+    0.00 :   124a:   cmp    %eax,-0x4(%rbp)
+    0.00 :   124d:   setl   %al
+    0.00 :   1250:   movzbl %al,%eax
+         : 26   }
+    0.00 :   1253:   pop    %rbp
+    0.00 :   1254:   ret
+ Percent |	Source code & Disassembly of prog for branches (660 samples, percent: local period)
+---------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    0000000000001255 <image_is_dark_opt>:
+         : 6    image_is_dark_opt():
+         : 29   }
+         : 30   return count < width * height / 2;
+         : 31   }
+         :
+         : 33   int image_is_dark_opt(uint8_t *img, int width, int height)
+         : 34   {
+    0.00 :   1255:   push   %rbp
+    0.00 :   1256:   mov    %rsp,%rbp
+    0.00 :   1259:   mov    %rdi,-0x28(%rbp)
+    0.00 :   125d:   mov    %esi,-0x2c(%rbp)
+    0.00 :   1260:   mov    %edx,-0x30(%rbp)
+         :
+         : 32   int area = width*height;
+    0.00 :   1263:   mov    -0x2c(%rbp),%eax
+    0.00 :   1266:   imul   -0x30(%rbp),%eax
+    0.00 :   126a:   mov    %eax,-0x18(%rbp)
+         : 32   int i = 0, count0 = 0, count1 = 0, count2 = 0, count3 = 0;
+    0.00 :   126d:   movl   $0x0,-0x4(%rbp)
+    0.00 :   1274:   movl   $0x0,-0x8(%rbp)
+    0.00 :   127b:   movl   $0x0,-0xc(%rbp)
+    0.00 :   1282:   movl   $0x0,-0x10(%rbp)
+    0.00 :   1289:   movl   $0x0,-0x14(%rbp)
+         : 33   for (; i < area - 3; i += 4) {
+    0.00 :   1290:   jmp    1303 <image_is_dark_opt+0xae>
+         :
+         : 36   count0 += img[i] >> 7;
+    0.29 :   1292:   mov    -0x4(%rbp),%eax
+   16.15 :   1295:   movslq %eax,%rdx
+    0.21 :   1298:   mov    -0x28(%rbp),%rax
+    6.89 :   129c:   add    %rdx,%rax
+    0.30 :   129f:   movzbl (%rax),%eax
+    1.46 :   12a2:   shr    $0x7,%al
+    0.76 :   12a5:   movzbl %al,%eax
+    0.43 :   12a8:   add    %eax,-0x8(%rbp)
+         : 36   count1 += img[i+1] >> 7;
+    3.47 :   12ab:   mov    -0x4(%rbp),%eax
+    0.00 :   12ae:   cltq
+    0.15 :   12b0:   lea    0x1(%rax),%rdx
+    0.00 :   12b4:   mov    -0x28(%rbp),%rax
+    1.33 :   12b8:   add    %rdx,%rax
+    0.00 :   12bb:   movzbl (%rax),%eax
+    0.63 :   12be:   shr    $0x7,%al
+    0.13 :   12c1:   movzbl %al,%eax
+    1.93 :   12c4:   add    %eax,-0xc(%rbp)
+         : 37   count2 += img[i+2] >> 7;
+    1.53 :   12c7:   mov    -0x4(%rbp),%eax
+    0.00 :   12ca:   cltq
+    2.19 :   12cc:   lea    0x2(%rax),%rdx
+    0.00 :   12d0:   mov    -0x28(%rbp),%rax
+    2.63 :   12d4:   add    %rdx,%rax
+    0.00 :   12d7:   movzbl (%rax),%eax
+    3.03 :   12da:   shr    $0x7,%al
+    0.00 :   12dd:   movzbl %al,%eax
+    3.95 :   12e0:   add    %eax,-0x10(%rbp)
+         : 38   count3 += img[i+3] >> 7;
+    6.54 :   12e3:   mov    -0x4(%rbp),%eax
+    0.00 :   12e6:   cltq
+    3.44 :   12e8:   lea    0x3(%rax),%rdx
+    0.00 :   12ec:   mov    -0x28(%rbp),%rax
+    8.81 :   12f0:   add    %rdx,%rax
+    0.00 :   12f3:   movzbl (%rax),%eax
+    4.61 :   12f6:   shr    $0x7,%al
+    0.15 :   12f9:   movzbl %al,%eax
+    8.15 :   12fc:   add    %eax,-0x14(%rbp)
+         : 33   for (; i < area - 3; i += 4) {
+    8.40 :   12ff:   addl   $0x4,-0x4(%rbp)
+    7.36 :   1303:   mov    -0x18(%rbp),%eax
+    0.00 :   1306:   sub    $0x3,%eax
+    5.07 :   1309:   cmp    %eax,-0x4(%rbp)
+    0.00 :   130c:   jl     1292 <image_is_dark_opt+0x3d>
+         :
+         : 42   }
+         : 43   int count = count0 + count1 + count2 + count3;
+    0.00 :   130e:   mov    -0x8(%rbp),%edx
+    0.00 :   1311:   mov    -0xc(%rbp),%eax
+    0.00 :   1314:   add    %eax,%edx
+    0.00 :   1316:   mov    -0x10(%rbp),%eax
+    0.00 :   1319:   add    %eax,%edx
+    0.00 :   131b:   mov    -0x14(%rbp),%eax
+    0.00 :   131e:   add    %edx,%eax
+    0.00 :   1320:   mov    %eax,-0x1c(%rbp)
+         : 42   return count < width * height / 2;
+    0.00 :   1323:   mov    -0x2c(%rbp),%eax
+    0.00 :   1326:   imul   -0x30(%rbp),%eax
+    0.00 :   132a:   mov    %eax,%edx
+    0.00 :   132c:   shr    $0x1f,%edx
+    0.00 :   132f:   add    %edx,%eax
+    0.00 :   1331:   sar    %eax
+    0.00 :   1333:   cmp    %eax,-0x1c(%rbp)
+    0.00 :   1336:   setl   %al
+    0.00 :   1339:   movzbl %al,%eax
+         :
+         : 45   }
+    0.00 :   133c:   pop    %rbp
+    0.00 :   133d:   ret
+ Percent |	Source code & Disassembly of prog for branches (2 samples, percent: local period)
+-------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .plt:
+         :
+         : 5    0000000000001080 <rand@plt>:
+  100.00 :   1080:   jmp    *0x2fa2(%rip)        # 4028 <rand@GLIBC_2.2.5>
+    0.00 :   1086:   push   $0x5
+    0.00 :   108b:   jmp    1020 <_init+0x20>

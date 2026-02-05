@@ -1,0 +1,120 @@
+ Percent |	Source code & Disassembly of prog for branch-misses (2 samples, percent: local period)
+------------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    00000000000013a9 <run>:
+         : 6    run():
+         : 64   }
+         : 65   return s;
+         : 66   }
+         :
+         : 68   void run(int (*fn)(int *, int))
+         : 69   {
+    0.00 :   13a9:   push   %rbp
+    0.00 :   13aa:   mov    %rsp,%rbp
+    0.00 :   13ad:   sub    $0x30,%rsp
+    0.00 :   13b1:   mov    %rdi,-0x28(%rbp)
+         : 65   int *vec = malloc(sizeof(*vec) * N);
+    0.00 :   13b5:   mov    $0x17d78400,%edi
+    0.00 :   13ba:   call   1060 <malloc@plt>
+    0.00 :   13bf:   mov    %rax,-0x10(%rbp)
+         : 66   for (int i = 0; i < N; i++) {
+    0.00 :   13c3:   movl   $0x0,-0x4(%rbp)
+    0.00 :   13ca:   jmp    13ea <run+0x41>
+         : 67   vec[i] = 1;
+    0.00 :   13cc:   mov    -0x4(%rbp),%eax
+   94.97 :   13cf:   cltq
+    0.00 :   13d1:   lea    0x0(,%rax,4),%rdx
+    0.00 :   13d9:   mov    -0x10(%rbp),%rax
+    0.00 :   13dd:   add    %rdx,%rax
+    0.00 :   13e0:   movl   $0x1,(%rax)
+         : 66   for (int i = 0; i < N; i++) {
+    5.03 :   13e6:   addl   $0x1,-0x4(%rbp)
+    0.00 :   13ea:   cmpl   $0x5f5e0ff,-0x4(%rbp)
+    0.00 :   13f1:   jle    13cc <run+0x23>
+         : 70   }
+         :
+         : 72   double t = wtime();
+    0.00 :   13f3:   mov    $0x0,%eax
+    0.00 :   13f8:   call   1169 <wtime>
+    0.00 :   13fd:   movq   %xmm0,%rax
+    0.00 :   1402:   mov    %rax,-0x18(%rbp)
+         : 71   int s = fn(vec, N);
+    0.00 :   1406:   mov    -0x10(%rbp),%rax
+    0.00 :   140a:   mov    -0x28(%rbp),%rdx
+    0.00 :   140e:   mov    $0x5f5e100,%esi
+    0.00 :   1413:   mov    %rax,%rdi
+    0.00 :   1416:   call   *%rdx
+    0.00 :   1418:   mov    %eax,-0x1c(%rbp)
+         : 72   t = wtime() - t;
+    0.00 :   141b:   mov    $0x0,%eax
+    0.00 :   1420:   call   1169 <wtime>
+    0.00 :   1425:   movq   %xmm0,%rax
+    0.00 :   142a:   movq   %rax,%xmm0
+    0.00 :   142f:   subsd  -0x18(%rbp),%xmm0
+    0.00 :   1434:   movsd  %xmm0,-0x18(%rbp)
+         :
+         : 75   printf("Time %.6f, sum %d\n", t, s);
+    0.00 :   1439:   mov    -0x1c(%rbp),%edx
+    0.00 :   143c:   mov    -0x18(%rbp),%rax
+    0.00 :   1440:   mov    %edx,%esi
+    0.00 :   1442:   movq   %rax,%xmm0
+    0.00 :   1447:   lea    0xbba(%rip),%rax        # 2008 <_IO_stdin_used+0x8>
+    0.00 :   144e:   mov    %rax,%rdi
+    0.00 :   1451:   mov    $0x1,%eax
+    0.00 :   1456:   call   1050 <printf@plt>
+         :
+         : 77   free(vec);
+    0.00 :   145b:   mov    -0x10(%rbp),%rax
+    0.00 :   145f:   mov    %rax,%rdi
+    0.00 :   1462:   call   1030 <free@plt>
+         : 77   }
+    0.00 :   1467:   nop
+    0.00 :   1468:   leave
+    0.00 :   1469:   ret
+ Percent |	Source code & Disassembly of prog for branch-misses (3 samples, percent: local period)
+------------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    00000000000011b8 <vec_sum>:
+         : 6    vec_sum():
+         : 16   clock_gettime(CLOCK_MONOTONIC, &ts);
+         : 17   return ts.tv_sec + ts.tv_nsec * 1E-9;
+         : 18   }
+         :
+         : 20   int vec_sum(int *vec, int n)
+         : 21   {
+    0.00 :   11b8:   push   %rbp
+    0.00 :   11b9:   mov    %rsp,%rbp
+    0.00 :   11bc:   mov    %rdi,-0x18(%rbp)
+    0.00 :   11c0:   mov    %esi,-0x1c(%rbp)
+         : 17   int s = 0;
+    0.00 :   11c3:   movl   $0x0,-0x4(%rbp)
+         : 18   for (int i = 0; i < n; i++) {
+    0.00 :   11ca:   movl   $0x0,-0x8(%rbp)
+    0.00 :   11d1:   jmp    11f0 <vec_sum+0x38>
+         : 19   s += vec[i];
+    0.00 :   11d3:   mov    -0x8(%rbp),%eax
+    0.00 :   11d6:   cltq
+   34.31 :   11d8:   lea    0x0(,%rax,4),%rdx
+    0.00 :   11e0:   mov    -0x18(%rbp),%rax
+    0.00 :   11e4:   add    %rdx,%rax
+   21.34 :   11e7:   mov    (%rax),%eax
+   44.35 :   11e9:   add    %eax,-0x4(%rbp)
+         : 18   for (int i = 0; i < n; i++) {
+    0.00 :   11ec:   addl   $0x1,-0x8(%rbp)
+    0.00 :   11f0:   mov    -0x8(%rbp),%eax
+    0.00 :   11f3:   cmp    -0x1c(%rbp),%eax
+    0.00 :   11f6:   jl     11d3 <vec_sum+0x1b>
+         : 21   }
+         : 22   return s;
+    0.00 :   11f8:   mov    -0x4(%rbp),%eax
+         : 22   }
+    0.00 :   11fb:   pop    %rbp
+    0.00 :   11fc:   ret
